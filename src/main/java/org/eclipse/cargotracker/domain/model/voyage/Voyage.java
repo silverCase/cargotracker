@@ -1,5 +1,5 @@
 package org.eclipse.cargotracker.domain.model.voyage;
-
+// initial commit
 import org.eclipse.cargotracker.domain.model.location.Location;
 import org.apache.commons.lang3.Validate;
 
