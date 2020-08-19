@@ -41,6 +41,8 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.joda.time.LocalDate;
+
 import java.util.*;
 
 
@@ -60,7 +62,7 @@ public class BookingServiceTest {
 
     private static TrackingId trackingId;
     private static List<Itinerary> candidates;
-    private static Date deadline;
+    private static LocalDate deadline;
     private static Itinerary assigned;
 
     @Deployment
@@ -143,11 +145,10 @@ public class BookingServiceTest {
         UnLocode fromUnlocode = new UnLocode("USCHI");
         UnLocode toUnlocode = new UnLocode("SESTO");
 
-        deadline = new Date();
         GregorianCalendar calendar = new GregorianCalendar();
-        calendar.setTime(deadline);
+        calendar.setTime(deadline.toDate());
         calendar.add(Calendar.MONTH, 6); // Six months ahead.
-        deadline.setTime(calendar.getTime().getTime());
+        deadline = new LocalDate(calendar.getTime().getTime());
 
         trackingId = bookingService.bookNewCargo(fromUnlocode, toUnlocode,
                 deadline);
@@ -159,8 +160,8 @@ public class BookingServiceTest {
         assertEquals(SampleLocations.CHICAGO, cargo.getOrigin());
         assertEquals(SampleLocations.STOCKHOLM, cargo.getRouteSpecification()
                 .getDestination());
-        assertTrue(DateUtils.isSameDay(deadline, cargo.getRouteSpecification()
-                .getArrivalDeadline()));
+        assertTrue(DateUtils.isSameDay(deadline.toDate(), cargo.getRouteSpecification()
+                .getArrivalDeadline().toDate()));
         assertEquals(TransportStatus.NOT_RECEIVED, cargo.getDelivery()
                 .getTransportStatus());
         assertEquals(Location.UNKNOWN, cargo.getDelivery()
@@ -205,7 +206,7 @@ public class BookingServiceTest {
         assertEquals(Voyage.NONE, cargo.getDelivery().getCurrentVoyage());
         assertFalse(cargo.getDelivery().isMisdirected());
         assertTrue(cargo.getDelivery().getEstimatedTimeOfArrival()
-                .before(deadline));
+                .isBefore(deadline));
         Assert.assertEquals(HandlingEvent.Type.RECEIVE, cargo.getDelivery()
                 .getNextExpectedActivity().getType());
         Assert.assertEquals(SampleLocations.CHICAGO, cargo.getDelivery()
@@ -229,8 +230,8 @@ public class BookingServiceTest {
         assertEquals(SampleLocations.CHICAGO, cargo.getOrigin());
         assertEquals(SampleLocations.HELSINKI, cargo.getRouteSpecification()
                 .getDestination());
-        assertTrue(DateUtils.isSameDay(deadline, cargo.getRouteSpecification()
-                .getArrivalDeadline()));
+        assertTrue(DateUtils.isSameDay(deadline.toDate(), cargo.getRouteSpecification()
+                .getArrivalDeadline().toDate()));
         assertEquals(assigned, cargo.getItinerary());
         assertEquals(TransportStatus.NOT_RECEIVED, cargo.getDelivery()
                 .getTransportStatus());

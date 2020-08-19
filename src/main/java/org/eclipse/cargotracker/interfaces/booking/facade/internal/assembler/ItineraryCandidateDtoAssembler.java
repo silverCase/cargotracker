@@ -9,6 +9,7 @@ import org.eclipse.cargotracker.domain.model.voyage.Voyage;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageNumber;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageRepository;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.RouteCandidate;
+import org.joda.time.LocalDate;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,9 +59,9 @@ public class ItineraryCandidateDtoAssembler {
 
             try {
                 legs.add(new Leg(voyage, from, to,
-                        DATE_FORMAT.parse(legDTO.getLoadTime()),
-                        DATE_FORMAT.parse(legDTO.getUnloadTime())));
-            } catch (ParseException ex) {
+                        LocalDate.parse(legDTO.getLoadTime()),
+                        LocalDate.parse(legDTO.getUnloadTime())));
+            } catch (IndexOutOfBoundsException ex) {
                 throw new RuntimeException("Could not parse date", ex);
             }
         }

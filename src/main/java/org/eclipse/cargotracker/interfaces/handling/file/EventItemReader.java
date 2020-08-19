@@ -17,7 +17,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,11 +102,11 @@ public class EventItemReader extends AbstractItemReader {
             throw new EventLineParseException("Wrong number of data elements", line);
         }
 
-        Date completionTime = null;
+        LocalDate completionTime = null;
 
         try {
-            completionTime = new SimpleDateFormat(ISO_8601_FORMAT).parse(result[0]);
-        } catch (ParseException e) {
+            completionTime = LocalDate.parse(result[0]);
+        } catch (IllegalArgumentException e) {
             throw new EventLineParseException("Cannot parse completion time", e, line);
         }
 
@@ -145,7 +145,7 @@ public class EventItemReader extends AbstractItemReader {
         }
 
         HandlingEventRegistrationAttempt attempt
-                = new HandlingEventRegistrationAttempt(new Date(), completionTime,
+                = new HandlingEventRegistrationAttempt(new LocalDate(), completionTime,
                 trackingId, voyageNumber, eventType, unLocode);
 
         return attempt;

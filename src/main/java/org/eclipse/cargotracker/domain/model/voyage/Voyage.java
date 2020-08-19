@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -103,7 +103,7 @@ public class Voyage implements Serializable {
         }
 
         public Builder addMovement(Location arrivalLocation,
-                                   Date departureTime, Date arrivalTime) {
+                                   LocalDate departureTime, LocalDate arrivalTime) {
             carrierMovements.add(new CarrierMovement(departureLocation,
                     arrivalLocation, departureTime, arrivalTime));
 

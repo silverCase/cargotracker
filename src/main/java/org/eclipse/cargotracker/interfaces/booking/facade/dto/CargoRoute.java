@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
@@ -31,7 +31,7 @@ public class CargoRoute implements Serializable {
     private String nextLocation;
 
     public CargoRoute(String trackingId, String origin, String finalDestination,
-                      Date arrivalDeadline, boolean misrouted, boolean claimed, String lastKnownLocation, String transportStatus) {
+                      LocalDate arrivalDeadline, boolean misrouted, boolean claimed, String lastKnownLocation, String transportStatus) {
         this.trackingId = trackingId;
         this.origin = origin;
         this.finalDestination = finalDestination;
@@ -80,7 +80,7 @@ public class CargoRoute implements Serializable {
             String voyageNumber,
             String fromUnLocode, String fromName,
             String toUnLocode, String toName,
-            Date loadTime, Date unloadTime) {
+            LocalDate loadTime, LocalDate unloadTime) {
         legs.add(new Leg(voyageNumber,
                 fromUnLocode, fromName,
                 toUnLocode, toName,

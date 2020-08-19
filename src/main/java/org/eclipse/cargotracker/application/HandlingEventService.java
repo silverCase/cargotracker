@@ -6,7 +6,8 @@ import org.eclipse.cargotracker.domain.model.handling.HandlingEvent;
 import org.eclipse.cargotracker.domain.model.location.UnLocode;
 import org.eclipse.cargotracker.domain.model.voyage.VoyageNumber;
 
-import java.util.Date;
+//import org.joda.time.LocalDate;
+import org.joda.time.LocalDate;
 
 public interface HandlingEventService {
 
@@ -14,7 +15,7 @@ public interface HandlingEventService {
      * Registers a handling event in the system, and notifies interested parties
      * that a cargo has been handled.
      */
-    void registerHandlingEvent(Date completionTime,
+    void registerHandlingEvent(LocalDate completionTime,
                                TrackingId trackingId,
                                VoyageNumber voyageNumber,
                                UnLocode unLocode,

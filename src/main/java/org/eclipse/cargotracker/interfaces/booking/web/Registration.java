@@ -2,6 +2,7 @@ package org.eclipse.cargotracker.interfaces.booking.web;
 
 import org.eclipse.cargotracker.interfaces.booking.facade.BookingServiceFacade;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.Location;
+import org.joda.time.LocalDate;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -79,7 +80,7 @@ public class Registration implements Serializable {
                 trackingId = bookingServiceFacade.bookNewCargo(
                         originUnlocode,
                         destinationUnlocode,
-                        new SimpleDateFormat(FORMAT).parse(arrivalDeadline));
+                        LocalDate.parse(arrivalDeadline));
             } else {
                 // TODO See if this can be injected.
                 FacesContext context = FacesContext.getCurrentInstance();
@@ -89,7 +90,7 @@ public class Registration implements Serializable {
                 context.addMessage(null, message);
                 return null;
             }
-        } catch (ParseException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new RuntimeException("Error parsing date", e);
         }
 

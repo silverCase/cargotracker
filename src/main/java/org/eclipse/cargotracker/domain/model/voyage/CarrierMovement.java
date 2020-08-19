@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 /**
  * A carrier movement is a vessel voyage from one location to another.
@@ -32,21 +32,21 @@ public class CarrierMovement implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "departure_time")
     @NotNull
-    private Date departureTime;
+    private LocalDate departureTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "arrival_time")
     @NotNull
-    private Date arrivalTime;
+    private LocalDate arrivalTime;
     // Null object pattern
     public static final CarrierMovement NONE = new CarrierMovement(
-            Location.UNKNOWN, Location.UNKNOWN, new Date(0), new Date(0));
+            Location.UNKNOWN, Location.UNKNOWN, new LocalDate(0), new LocalDate(0));
 
     public CarrierMovement() {
         // Nothing to initialize.
     }
 
     public CarrierMovement(Location departureLocation,
-                           Location arrivalLocation, Date departureTime, Date arrivalTime) {
+                           Location arrivalLocation, LocalDate departureTime, LocalDate arrivalTime) {
         Validate.noNullElements(new Object[]{departureLocation,
                 arrivalLocation, departureTime, arrivalTime});
         this.departureTime = departureTime;
@@ -63,12 +63,12 @@ public class CarrierMovement implements Serializable {
         return arrivalLocation;
     }
 
-    public Date getDepartureTime() {
-        return new Date(departureTime.getTime());
+    public LocalDate getDepartureTime() {
+        return new LocalDate(departureTime.getValue(0));
     }
 
-    public Date getArrivalTime() {
-        return new Date(arrivalTime.getTime());
+    public LocalDate getArrivalTime() {
+        return new LocalDate(arrivalTime.getValue(0));
     }
 
     @Override

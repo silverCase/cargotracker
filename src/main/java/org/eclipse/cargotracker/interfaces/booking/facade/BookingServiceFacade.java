@@ -4,7 +4,7 @@ import org.eclipse.cargotracker.interfaces.booking.facade.dto.CargoRoute;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.Location;
 import org.eclipse.cargotracker.interfaces.booking.facade.dto.RouteCandidate;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface BookingServiceFacade {
 
-    String bookNewCargo(String origin, String destination, Date arrivalDeadline);
+    String bookNewCargo(String origin, String destination, LocalDate arrivalDeadline);
 
     CargoRoute loadCargoForRouting(String trackingId);
 

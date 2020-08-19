@@ -17,7 +17,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 
 /**
@@ -43,7 +43,7 @@ public class HandlingReportService {
     // TODO Better exception handling.
     public void submitReport(@NotNull @Valid HandlingReport handlingReport) {
         try {
-            Date completionTime = new SimpleDateFormat(ISO_8601_FORMAT).parse(
+            LocalDate completionTime = LocalDate.parse(
                     handlingReport.getCompletionTime());
             VoyageNumber voyageNumber = null;
 
@@ -58,13 +58,13 @@ public class HandlingReportService {
 
             TrackingId trackingId = new TrackingId(handlingReport.getTrackingId());
 
-            Date registrationTime = new Date();
+            LocalDate registrationTime = new LocalDate();
             HandlingEventRegistrationAttempt attempt =
                     new HandlingEventRegistrationAttempt(registrationTime,
                             completionTime, trackingId, voyageNumber, type, unLocode);
 
             applicationEvents.receivedHandlingEventRegistrationAttempt(attempt);
-        } catch (ParseException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             throw new RuntimeException("Error parsing completion time", ex);
         }
     }

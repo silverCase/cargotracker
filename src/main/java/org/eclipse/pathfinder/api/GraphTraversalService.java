@@ -2,6 +2,8 @@ package org.eclipse.pathfinder.api;
 
 import org.eclipse.pathfinder.internal.GraphDao;
 
+import org.joda.time.LocalDate;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -30,7 +32,7 @@ public class GraphTraversalService {
             @NotNull @Size(min = 5, max = 5) @QueryParam("origin") String originUnLocode,
             @NotNull @Size(min = 5, max = 5) @QueryParam("destination") String destinationUnLocode,
             @QueryParam("deadline") String deadline) {
-        Date date = nextDate(new Date());
+        LocalDate date = nextDate(new LocalDate());
 
         List<String> allVertices = dao.listLocations();
         allVertices.remove(originUnLocode);
@@ -46,8 +48,8 @@ public class GraphTraversalService {
                     allVertices.size() - 1);
             String firstLegTo = allVertices.get(0);
 
-            Date fromDate = nextDate(date);
-            Date toDate = nextDate(fromDate);
+            LocalDate fromDate = nextDate(date);
+            LocalDate toDate = nextDate(fromDate);
             date = nextDate(toDate);
 
             transitEdges.add(new TransitEdge(
@@ -77,8 +79,8 @@ public class GraphTraversalService {
         return candidates;
     }
 
-    private Date nextDate(Date date) {
-        return new Date(date.getTime() + ONE_DAY_MS
+    private LocalDate nextDate(LocalDate date) {
+        return new LocalDate(date.getValue(0) + ONE_DAY_MS
                 + (random.nextInt(1000) - 500) * ONE_MIN_MS);
     }
 

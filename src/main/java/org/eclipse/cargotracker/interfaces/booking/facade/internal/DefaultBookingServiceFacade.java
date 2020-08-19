@@ -20,7 +20,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 @ApplicationScoped
@@ -46,7 +46,7 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
 
     @Override
     public String bookNewCargo(String origin, String destination,
-                               Date arrivalDeadline) {
+                               LocalDate arrivalDeadline) {
         TrackingId trackingId = bookingService.bookNewCargo(
                 new UnLocode(origin), new UnLocode(destination),
                 arrivalDeadline);

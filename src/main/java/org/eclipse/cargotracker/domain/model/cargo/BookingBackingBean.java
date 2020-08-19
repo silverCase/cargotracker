@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 import static org.eclipse.cargotracker.application.util.DateUtil.computeDuration;
@@ -30,13 +30,13 @@ public class BookingBackingBean implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final String FORMAT = "yyyy-MM-dd";
     List<Location> locations;
-    private Date arrivalDeadline;
+    private LocalDate arrivalDeadline;
     private String originUnlocode;
     private String originName;
     private String destinationName;
     private String destinationUnlocode;
     private String newTrackingId = null;
-    private Date today = new Date();
+    private LocalDate today = new LocalDate();
     private boolean bookable = false;
     private long duration = -1;
     private final long MIN_JOURNEY_DURATION = 1; // journey should be 1 day min.
@@ -72,7 +72,7 @@ public class BookingBackingBean implements Serializable {
         return filteredLocations;
     }
 
-    public Date getArrivalDeadline() {
+    public LocalDate getArrivalDeadline() {
         return arrivalDeadline;
     }
 
@@ -110,7 +110,7 @@ public class BookingBackingBean implements Serializable {
         }
     }
 
-    public Date getToday() {
+    public LocalDate getToday() {
         return today;
     }
 
@@ -118,7 +118,7 @@ public class BookingBackingBean implements Serializable {
         return duration;
     }
 
-    public void setArrivalDeadline(Date arrivalDeadline) {
+    public void setArrivalDeadline(LocalDate arrivalDeadline) {
         this.arrivalDeadline = arrivalDeadline;
     }
 

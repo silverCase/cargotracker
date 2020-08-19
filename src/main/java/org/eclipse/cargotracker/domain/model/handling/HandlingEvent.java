@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 /**
  * A HandlingEvent is used to register the event when, for instance, a cargo is
@@ -55,11 +55,11 @@ public class HandlingEvent implements Serializable {
     @Temporal(TemporalType.DATE)
     @NotNull
     @Column(name = "completionTime")
-    private Date completionTime;
+    private LocalDate completionTime;
     @Temporal(TemporalType.DATE)
     @NotNull
     @Column(name = "registration")
-    private Date registrationTime;
+    private LocalDate registrationTime;
     @ManyToOne
     @JoinColumn(name = "cargo_id")
     @NotNull
@@ -129,8 +129,8 @@ public class HandlingEvent implements Serializable {
      * @param location         where the event took place
      * @param voyage           the voyage
      */
-    public HandlingEvent(Cargo cargo, Date completionTime,
-                         Date registrationTime, Type type, Location location, Voyage voyage) {
+    public HandlingEvent(Cargo cargo, LocalDate completionTime,
+                         LocalDate registrationTime, Type type, Location location, Voyage voyage) {
         Validate.notNull(cargo, "Cargo is required");
         Validate.notNull(completionTime, "Completion time is required");
         Validate.notNull(registrationTime, "Registration time is required");
@@ -144,8 +144,8 @@ public class HandlingEvent implements Serializable {
         }
 
         this.voyage = voyage;
-        this.completionTime = (Date) completionTime.clone();
-        this.registrationTime = (Date) registrationTime.clone();
+        this.completionTime = completionTime;
+        this.registrationTime = registrationTime;
         this.type = type;
         this.location = location;
         this.cargo = cargo;
@@ -160,8 +160,8 @@ public class HandlingEvent implements Serializable {
      * @param type             type of event
      * @param location         where the event took place
      */
-    public HandlingEvent(Cargo cargo, Date completionTime,
-                         Date registrationTime, Type type, Location location) {
+    public HandlingEvent(Cargo cargo, LocalDate completionTime,
+                         LocalDate registrationTime, Type type, Location location) {
         Validate.notNull(cargo, "Cargo is required");
         Validate.notNull(completionTime, "Completion time is required");
         Validate.notNull(registrationTime, "Registration time is required");
@@ -173,8 +173,8 @@ public class HandlingEvent implements Serializable {
                     "Voyage is required for event type " + type);
         }
 
-        this.completionTime = (Date) completionTime.clone();
-        this.registrationTime = (Date) registrationTime.clone();
+        this.completionTime = completionTime;
+        this.registrationTime = registrationTime;
         this.type = type;
         this.location = location;
         this.cargo = cargo;
@@ -189,12 +189,12 @@ public class HandlingEvent implements Serializable {
         return DomainObjectUtils.nullSafe(this.voyage, Voyage.NONE);
     }
 
-    public Date getCompletionTime() {
-        return new Date(this.completionTime.getTime());
+    public LocalDate getCompletionTime() {
+        return new LocalDate(this.completionTime.getValue(0));
     }
 
-    public Date getRegistrationTime() {
-        return new Date(this.registrationTime.getTime());
+    public LocalDate getRegistrationTime() {
+        return new LocalDate(this.registrationTime.getValue(0));
     }
 
     public Location getLocation() {

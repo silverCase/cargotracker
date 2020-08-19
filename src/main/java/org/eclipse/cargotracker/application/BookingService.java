@@ -4,7 +4,7 @@ import org.eclipse.cargotracker.domain.model.cargo.Itinerary;
 import org.eclipse.cargotracker.domain.model.cargo.TrackingId;
 import org.eclipse.cargotracker.domain.model.location.UnLocode;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ public interface BookingService {
     /**
      * Registers a new cargo in the tracking system, not yet routed.
      */
-    TrackingId bookNewCargo(UnLocode origin, UnLocode destination, Date arrivalDeadline);
+    TrackingId bookNewCargo(UnLocode origin, UnLocode destination, LocalDate arrivalDeadline);
 
     /**
      * Requests a list of itineraries describing possible routes for this cargo.

@@ -14,7 +14,7 @@ import org.primefaces.model.map.Marker;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 
 import static org.eclipse.cargotracker.application.util.LocationUtil.getCoordinatesForLocation;
@@ -87,7 +87,7 @@ public class CargoTrackingViewAdapter {
     }
 
     public String getEta() {
-        Date eta = cargo.getDelivery().getEstimatedTimeOfArrival();
+        LocalDate eta = cargo.getDelivery().getEstimatedTimeOfArrival();
 
         if (eta == null) {
             return "?";

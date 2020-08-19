@@ -9,7 +9,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import org.joda.time.LocalDate;
 
 @Entity
 public class Leg implements Serializable {
@@ -33,18 +33,18 @@ public class Leg implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "load_time")
     @NotNull
-    private Date loadTime;
+    private LocalDate loadTime;
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "unload_time")
     @NotNull
-    private Date unloadTime;
+    private LocalDate unloadTime;
 
     public Leg() {
         // Nothing to initialize.
     }
 
     public Leg(Voyage voyage, Location loadLocation, Location unloadLocation,
-               Date loadTime, Date unloadTime) {
+               LocalDate loadTime, LocalDate unloadTime) {
         Validate.noNullElements(new Object[]{voyage, loadLocation,
                 unloadLocation, loadTime, unloadTime});
 
@@ -67,12 +67,12 @@ public class Leg implements Serializable {
         return unloadLocation;
     }
 
-    public Date getLoadTime() {
-        return new Date(loadTime.getTime());
+    public LocalDate getLoadTime() {
+        return new LocalDate(loadTime.getValue(0));
     }
 
-    public Date getUnloadTime() {
-        return new Date(unloadTime.getTime());
+    public LocalDate getUnloadTime() {
+        return new LocalDate(unloadTime.getValue(0));
     }
 
     private boolean sameValueAs(Leg other) {

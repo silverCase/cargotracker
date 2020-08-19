@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import java.util.Collections;
 
-import java.util.Date;
+import org.joda.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +32,7 @@ public class DefaultBookingService implements BookingService {
     @Override
     public TrackingId bookNewCargo(UnLocode originUnLocode,
                                    UnLocode destinationUnLocode,
-                                   Date arrivalDeadline) {
+                                   LocalDate arrivalDeadline) {
         TrackingId trackingId = cargoRepository.nextTrackingId();
         Location origin = locationRepository.find(originUnLocode);
         Location destination = locationRepository.find(destinationUnLocode);
